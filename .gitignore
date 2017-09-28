@@ -1,0 +1,18 @@
+.project
+.pydevproject
+*.pyc
+*.pyo
+*.db
+.DS_Store
+.coverage
+#local_settings.py
+/static
+
+# Distribution / packaging
+.Python
+.cache
+# Django stuff:
+.log
+
+# pyenv
+django/static/media/uploads/gallery/*

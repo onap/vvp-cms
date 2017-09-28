@@ -1,0 +1,93 @@
+# ============LICENSE_START========================================== 
+# org.onap.vvp/cms
+# ===================================================================
+# Copyright © 2017 AT&T Intellectual Property. All rights reserved.
+# ===================================================================
+#
+# Unless otherwise specified, all software contained herein is licensed
+# under the Apache License, Version 2.0 (the “License”);
+# you may not use this software except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#             http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+#
+#
+# Unless otherwise specified, all documentation contained herein is licensed
+# under the Creative Commons License, Attribution 4.0 Intl. (the “License”);
+# you may not use this documentation except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#             https://creativecommons.org/licenses/by/4.0/
+#
+# Unless required by applicable law or agreed to in writing, documentation
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+# ============LICENSE_END============================================
+#
+# ECOMP is a trademark and service mark of AT&T Intellectual Property.
+
+upstream %(proj_name)s {
+    server unix:%(proj_path)s/gunicorn.sock fail_timeout=0;
+}
+
+server {
+
+    listen 80;
+    %(ssl_disabled)s listen 443 ssl;
+    server_name %(domains_nginx)s;
+    client_max_body_size 10M;
+    keepalive_timeout    15;
+    error_log /home/%(user)s/logs/%(proj_name)s_error_nginx.log info;
+
+    %(ssl_disabled)s ssl_certificate      conf/%(proj_name)s.crt;
+    %(ssl_disabled)s ssl_certificate_key  conf/%(proj_name)s.key;
+    %(ssl_disabled)s ssl_session_cache    shared:SSL:10m;
+    %(ssl_disabled)s ssl_session_timeout  10m;
+    %(ssl_disabled)s ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-DSS-AES128-GCM-SHA256:kEDH+AESGCM:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA:ECDHE-ECDSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-DSS-AES128-SHA256:DHE-RSA-AES256-SHA256:DHE-DSS-AES256-SHA:DHE-RSA-AES256-SHA:AES128-GCM-SHA256:AES256-GCM-SHA384:AES128-SHA256:AES256-SHA256:AES128-SHA:AES256-SHA:AES:CAMELLIA:DES-CBC3-SHA:!aNULL:!eNULL:!EXPORT:!DES:!RC4:!MD5:!PSK:!aECDH:!EDH-DSS-DES-CBC3-SHA:!EDH-RSA-DES-CBC3-SHA:!KRB5-DES-CBC3-SHA;
+    %(ssl_disabled)s ssl_prefer_server_ciphers on;
+    %(ssl_disabled)s ssl_protocols TLSv1.2 TLSv1.1 TLSv1;
+
+    # Deny illegal Host headers
+    if ($host !~* ^(%(domains_regex)s)$) {
+        return 444;
+    }
+
+    location / {
+        proxy_redirect      off;
+        proxy_set_header    Host                    $host;
+        proxy_set_header    X-Real-IP               $remote_addr;
+        proxy_set_header    X-Forwarded-For         $proxy_add_x_forwarded_for;
+        proxy_set_header    X-Forwarded-Protocol    $scheme;
+        proxy_pass          http://%(proj_name)s;
+    }
+
+    location /static/ {
+        root            %(proj_path)s;
+        access_log      off;
+        log_not_found   off;
+        expires 30d;
+    }
+
+    location /robots.txt {
+        root            %(proj_path)s/static;
+        access_log      off;
+        log_not_found   off;
+    }
+
+    location /favicon.ico {
+        root            %(proj_path)s/static/img;
+        access_log      off;
+        log_not_found   off;
+    }
+
+}
