@@ -1,4 +1,4 @@
-# ============LICENSE_START========================================== 
+# ============LICENSE_START==========================================
 # org.onap.vvp/cms
 # ===================================================================
 # Copyright © 2017 AT&T Intellectual Property. All rights reserved.
@@ -46,6 +46,8 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         name = "Documentation"
-        content = "<p>This is the default content of Documentation1 page - you can change it through CMS.</p>"
-        page = RichTextPage.objects.get_or_create(title=name, defaults={'content': content, 'login_required': True})
+        content = "<p>This is the default content of Documentation1 page - \
+        you can change it through CMS.</p>"
+        page = RichTextPage.objects.get_or_create(
+            title=name, defaults={'content': content, 'login_required': True})
         print("Created Ice page: %s" % page[0].title)

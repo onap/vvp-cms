@@ -1,4 +1,4 @@
-# ============LICENSE_START========================================== 
+# ============LICENSE_START==========================================
 # org.onap.vvp/cms
 # ===================================================================
 # Copyright © 2017 AT&T Intellectual Property. All rights reserved.
@@ -87,7 +87,8 @@ env.key_filename = conf.get("SSH_KEY_PATH", None)
 env.hosts = conf.get("HOSTS", [""])
 
 env.proj_name = conf.get("PROJECT_NAME", env.proj_app)
-env.venv_home = conf.get("VIRTUALENV_HOME", "/home/%s/.virtualenvs" % env.user)
+env.venv_home = conf.get(
+    "VIRTUALENV_HOME", "/home/%s/.virtualenvs" % env.user)
 env.venv_path = join(env.venv_home, env.proj_name)
 env.proj_path = "/home/%s/mezzanine/%s" % (env.user, env.proj_name)
 env.manage = "%s/bin/python %s/manage.py" % (env.venv_path, env.proj_path)
@@ -180,7 +181,8 @@ def update_changed_requirements():
     and gets new requirements if changes have occurred.
     """
     reqs_path = join(env.proj_path, env.reqs_path)
-    get_reqs = lambda: run("cat %s" % reqs_path, show=False)
+
+    def get_reqs(): return run("cat %s" % reqs_path, show=False)
     old_reqs = get_reqs() if env.reqs_path else ""
     yield
     if old_reqs:
@@ -284,7 +286,8 @@ def upload_template_and_reload(name):
         if "%(db_pass)s" in local_data:
             env.db_pass = db_pass()
         local_data %= env
-    clean = lambda s: s.replace("\n", "").replace("\r", "").strip()
+
+    def clean(s): return s.replace("\n", "").replace("\r", "").strip()
     if clean(remote_data) == clean(local_data):
         return
     upload_template(local_path, remote_path, env, use_sudo=True, backup=False)
@@ -650,9 +653,9 @@ def deploy():
     if env.deploy_tool in env.vcs_tools:
         with cd(env.repo_path):
             if env.deploy_tool == "git":
-                    run("git rev-parse HEAD > %s/last.commit" % env.proj_path)
+                run("git rev-parse HEAD > %s/last.commit" % env.proj_path)
             elif env.deploy_tool == "hg":
-                    run("hg id -i > last.commit")
+                run("hg id -i > last.commit")
         with project():
             static_dir = static()
             if exists(static_dir):
@@ -693,10 +696,10 @@ def rollback():
         if env.deploy_tool in env.vcs_tools:
             with cd(env.repo_path):
                 if env.deploy_tool == "git":
-                        run("GIT_WORK_TREE={0} git checkout -f "
-                            "`cat {0}/last.commit`".format(env.proj_path))
+                    run("GIT_WORK_TREE={0} git checkout -f "
+                        "`cat {0}/last.commit`".format(env.proj_path))
                 elif env.deploy_tool == "hg":
-                        run("hg update -C `cat last.commit`")
+                    run("hg update -C `cat last.commit`")
             with project():
                 with cd(join(static(), "..")):
                     run("tar -xf %s/static.tar" % env.proj_path)

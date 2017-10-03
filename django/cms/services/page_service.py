@@ -1,4 +1,4 @@
-# ============LICENSE_START========================================== 
+# ============LICENSE_START==========================================
 # org.onap.vvp/cms
 # ===================================================================
 # Copyright © 2017 AT&T Intellectual Property. All rights reserved.
@@ -36,7 +36,7 @@
 #
 # ECOMP is a trademark and service mark of AT&T Intellectual Property.
 from django.db.models import Q
-from mezzanine.pages.models import Page, RichTextPage
+from mezzanine.pages.models import RichTextPage
 
 from cms.serializers import SearchPageSerializer
 
@@ -47,7 +47,8 @@ class PageService:
 
     @staticmethod
     def search(keyword):
-        pages = RichTextPage.objects.published().filter(Q(title__icontains=keyword) |
-                                                        Q(content__icontains=keyword))
+        pages = RichTextPage.objects.published().filter(
+            Q(title__icontains=keyword) |
+            Q(content__icontains=keyword))
 
         return SearchPageSerializer(pages.values(), many=True).data

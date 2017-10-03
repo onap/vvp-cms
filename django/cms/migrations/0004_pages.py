@@ -1,4 +1,4 @@
-# ============LICENSE_START========================================== 
+# ============LICENSE_START==========================================
 # org.onap.vvp/cms
 # ===================================================================
 # Copyright © 2017 AT&T Intellectual Property. All rights reserved.
@@ -37,8 +37,6 @@
 # ECOMP is a trademark and service mark of AT&T Intellectual Property.
 from __future__ import unicode_literals
 from django.db import migrations
-from mezzanine.pages.models import RichTextPage
-from django.contrib.sites.models import Site
 
 # This migration file creates default pages
 '''

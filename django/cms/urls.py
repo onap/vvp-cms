@@ -1,4 +1,4 @@
-# ============LICENSE_START========================================== 
+# ============LICENSE_START==========================================
 # org.onap.vvp/cms
 # ===================================================================
 # Copyright © 2017 AT&T Intellectual Property. All rights reserved.
@@ -68,7 +68,6 @@ urlpatterns += [
     # REST API URLs
     url(r'^api/pages/search/?$', PageSearch.as_view()),
     url("^api/", include("mezzanine_api.urls")),
-    
     # We don't want to presume how your homepage works, so here are a
     # few patterns you can use to set it up.
 
@@ -120,7 +119,6 @@ urlpatterns += [
     # from it, and use them directly below instead of using
     # ``mezzanine.urls``.
     url("^", include("mezzanine.urls")),
-
     # MOUNTING MEZZANINE UNDER A PREFIX
     # ---------------------------------
     # You can also mount all of Mezzanine's urlpatterns under a
@@ -134,13 +132,8 @@ urlpatterns += [
     # of this file as well.
     # Note that for any of the various homepage patterns above, you'll
     # need to use the ``SITE_PREFIX`` setting as well.
-
     # ("^%s/" % settings.SITE_PREFIX, include("mezzanine.urls"))
-    
-    
-
 ]
-
 # Adds ``STATIC_URL`` to the context of error pages, so that error
 # pages can use JS, CSS and images.
 handler404 = "mezzanine.core.views.page_not_found"

@@ -1,4 +1,4 @@
-# ============LICENSE_START========================================== 
+# ============LICENSE_START==========================================
 # org.onap.vvp/cms
 # ===================================================================
 # Copyright © 2017 AT&T Intellectual Property. All rights reserved.
@@ -37,20 +37,22 @@
 # ECOMP is a trademark and service mark of AT&T Intellectual Property.
 from __future__ import unicode_literals
 from django.db import migrations
-from mezzanine.blog.models import BlogCategory
-from django.contrib.sites.models import Site
 
-#This migration file creates default categories
+# This migration file creates default categories
 '''
 Creating ICE default categories
 '''
+
+
 def create_categories(apps, schema_editor):
-    print("Used to create the categories but now we will create them with command")
+    print("Used to create the categories, \
+    but now we will create them with command")
+
 
 class Migration(migrations.Migration):
-    
-    dependencies = [ ('cms', '0002_user_application'), ]
+
+    dependencies = [('cms', '0002_user_application'), ]
 
     operations = [
-       migrations.RunPython(create_categories),
+        migrations.RunPython(create_categories),
     ]
