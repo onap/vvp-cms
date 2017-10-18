@@ -1,5 +1,6 @@
-# ============LICENSE_START========================================== 
-# org.onap.vvp/cms
+#
+# ============LICENSE_START==========================================
+# org.onap.vvp/engagementmgr
 # ===================================================================
 # Copyright © 2017 AT&T Intellectual Property. All rights reserved.
 # ===================================================================
@@ -35,10 +36,25 @@
 # ============LICENSE_END============================================
 #
 # ECOMP is a trademark and service mark of AT&T Intellectual Property.
-Django==1.10.6
-djangorestframework==3.6.4
-Mezzanine==4.2.3
-git+https://github.com/att-innovate/mezzanine-api.git@master
-psycopg2
-boto
-django-storages
+from mezzanine.pages.models import RichTextPage
+from cms.management.commands import import_pages
+from cms.tests.test_base_entity import TestBaseEntity
+
+
+class ImportPagesCommandTestCase(TestBaseEntity):
+
+    def childSetup(self):
+        print("======================= "
+              "ImportPagesCommandTestCase "
+              "=======================")
+        import_pages_command = import_pages.Command()
+        import_pages_command.handle()
+        self.console_print("command ran successfully")
+
+    def testDocumentationPageCreatedByCommand(self):
+        documentation_title = "Documentation"
+        documentation_page = \
+            RichTextPage.objects.get(title=documentation_title)
+
+        self.assertTrue(documentation_page is not None)
+        self.assertEqual(documentation_page.title, documentation_title)

@@ -1,5 +1,6 @@
-# ============LICENSE_START========================================== 
-# org.onap.vvp/cms
+#
+# ============LICENSE_START==========================================
+# org.onap.vvp/engagementmgr
 # ===================================================================
 # Copyright © 2017 AT&T Intellectual Property. All rights reserved.
 # ===================================================================
@@ -35,10 +36,33 @@
 # ============LICENSE_END============================================
 #
 # ECOMP is a trademark and service mark of AT&T Intellectual Property.
-Django==1.10.6
-djangorestframework==3.6.4
-Mezzanine==4.2.3
-git+https://github.com/att-innovate/mezzanine-api.git@master
-psycopg2
-boto
-django-storages
+from abc import ABCMeta, abstractmethod
+import http.client
+import django
+from django.test import TestCase
+from django.test.client import Client
+django.setup()
+
+
+class TestBaseEntity(TestCase):
+    __metaclass__ = ABCMeta
+
+    def setUp(self):
+        self.urlPrefix = "/api/"
+        self.conn = http.client.HTTPConnection("127.0.0.1", 8000)
+        self.c = Client()
+        self.childSetup()
+
+    def tearDown(self):
+        self.conn.close()
+
+    @abstractmethod
+    def childSetup(self):
+        pass
+
+    def console_print(self, msg):
+        print("======================= "
+              "log from test "
+              "=======================")
+        print(msg)
+        print("_____________________________________________________________")

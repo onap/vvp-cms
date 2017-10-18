@@ -1,5 +1,6 @@
-# ============LICENSE_START========================================== 
-# org.onap.vvp/cms
+#
+# ============LICENSE_START==========================================
+# org.onap.vvp/engagementmgr
 # ===================================================================
 # Copyright © 2017 AT&T Intellectual Property. All rights reserved.
 # ===================================================================
@@ -35,10 +36,41 @@
 # ============LICENSE_END============================================
 #
 # ECOMP is a trademark and service mark of AT&T Intellectual Property.
-Django==1.10.6
-djangorestframework==3.6.4
-Mezzanine==4.2.3
-git+https://github.com/att-innovate/mezzanine-api.git@master
-psycopg2
-boto
-django-storages
+from mezzanine.blog.models import BlogCategory
+from cms.management.commands import import_categories
+from cms.tests.test_base_entity import TestBaseEntity
+
+
+class ImportCategoriesCommandTestCase(TestBaseEntity):
+
+    def childSetup(self):
+        print("======================= "
+              "ImportCategoriesCommandTestCase "
+              "=======================")
+        import_categories_command = import_categories.Command()
+        import_categories_command.handle()
+        self.console_print("command ran successfully")
+
+    def testNewsCategoryCreatedByCommand(self):
+        news_title = "News"
+        news_category = \
+            BlogCategory.objects.get(title=news_title)
+
+        self.assertTrue(news_category is not None)
+        self.assertEqual(news_category.title, news_title)
+
+    def testAnnouncementCategoryCreatedByCommand(self):
+        announcement_title = "Announcement"
+        announcement_category = \
+            BlogCategory.objects.get(title=announcement_title)
+
+        self.assertTrue(announcement_category is not None)
+        self.assertEqual(announcement_category.title, announcement_title)
+
+    def testFAQCategoryCreatedByCommand(self):
+        faq_title = "FAQ"
+        faq_category = \
+            BlogCategory.objects.get(title=faq_title)
+
+        self.assertTrue(faq_category is not None)
+        self.assertEqual(faq_category.title, faq_title)
