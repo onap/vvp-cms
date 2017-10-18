@@ -7,8 +7,8 @@
     <version>1.0.0-SNAPSHOT</version>
   </parent>
 
-  <groupId>org.openecomp.vvp.cms</groupId>
-  <artifactId>cms</artifactId>
+  <groupId>org.openecomp.vvp</groupId>
+  <artifactId>vvp-cms</artifactId>
   <packaging>pom</packaging>
   <version>1.0.0-SNAPSHOT</version>
   <name>vvp-cms</name>
@@ -47,7 +47,7 @@
                 <registry>nexus3.onap.org:10003</registry>
                 <images>
                     <image>
-                        <name>openecomp/vvp/cms</name>
+                        <name>openecomp/vvp-cms</name>
                         <alias>vvp-cms</alias>
                         <build>
                             <cleanup>true</cleanup>
@@ -88,7 +88,7 @@
                         <goal>push</goal>
                     </goals>
                     <configuration>
-                        <image>openecomp/vvp/cms</image>
+                        <image>openecomp/vvp-cms</image>
                     </configuration>
                 </execution>
             </executions>
