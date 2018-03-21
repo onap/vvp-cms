@@ -19,9 +19,10 @@
         <sitePath>/content/sites/site/org/openecomp/vvp/${project.artifactId}/${project.version}</sitePath>
         <!--maven-->
         <timestamp>${maven.build.timestamp}</timestamp>
-        <maven.build.timestamp.format>yyyy.MM.dd.HH.mm</maven.build.timestamp.format>
+        <maven.build.timestamp.format>yyyyMMdd'T'HHmmss'Z'</maven.build.timestamp.format>
         <!--docker-->
-        <docker.tag>${project.version}-${timestamp}</docker.tag>
+        <docker.snapshot.tag>${project.version}-SNAPSHOT-${timestamp}</docker.snapshot.tag>
+        <docker.staging.tag>${project.version}-STAGING-${timestamp}</docker.staging.tag>
         <docker.latest.tag>${project.version}-latest</docker.latest.tag>
   </properties>
 
@@ -53,8 +54,7 @@
                         <build>
                             <cleanup>true</cleanup>
                             <tags>
-                                <tag>${docker.tag}</tag>
-                                <tag>${docker.latest.tag}</tag>
+                                <tag>${docker.snapshot.tag}</tag>
                             </tags>
                             <dockerFileDir>${project.basedir}</dockerFileDir>
                         </build>
