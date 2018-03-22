@@ -62,7 +62,7 @@ def create_emuser(apps, schema_editor):
     args = (DEFAULT_USERNAME, DEFAULT_EMAIL, DEFAULT_PASSWORD)
     try:
         User.objects.get(username=DEFAULT_USERNAME)
-    except:
+    except Exception:
         User.objects.create_superuser(*args)
 
 
@@ -77,7 +77,7 @@ def create_emapp(apps, schema_editor):
     application = None
     try:
         application = Application.objects.get(client_id=DEFAULT_CLIENT_ID)
-    except:
+    except Exception:
         # If client_secret and client_id not supplied, a unique one will be
         # generated
         application = Application.objects.create(
