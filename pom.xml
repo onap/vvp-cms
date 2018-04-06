@@ -21,7 +21,8 @@
         <timestamp>${maven.build.timestamp}</timestamp>
         <maven.build.timestamp.format>yyyyMMdd'T'HHmmss'Z'</maven.build.timestamp.format>
         <!--docker-->
-        <docker.tag>${project.version}-${timestamp}</docker.tag>
+        <docker.snapshot.tag>${project.version}-SNAPSHOT-${timestamp}</docker.snapshot.tag>
+        <docker.staging.tag>${project.version}-STAGING-${timestamp}</docker.staging.tag>
         <docker.latest.tag>${project.version}-latest</docker.latest.tag>
         <docker.pull.registry>nexus3.onap.org:10001</docker.pull.registry>
         <docker.push.registry>nexus3.onap.org:10003</docker.push.registry>
@@ -56,8 +57,7 @@
                         <build>
                             <cleanup>true</cleanup>
                             <tags>
-                                <tag>${docker.tag}</tag>
-                                <tag>${docker.latest.tag}</tag>
+                                <tag>${docker.snapshot.tag}</tag>
                             </tags>
                             <dockerFileDir>${project.basedir}</dockerFileDir>
                         </build>
