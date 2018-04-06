@@ -7,7 +7,7 @@
     <version>1.1.0</version>
   </parent>
 
-  <groupId>org.openecomp.vvp.cms</groupId>
+  <groupId>org.onap.vvp.cms</groupId>
   <artifactId>cms</artifactId>
   <packaging>pom</packaging>
   <version>1.0.0-SNAPSHOT</version>
@@ -16,7 +16,7 @@
   <properties>
         <!--nexus-->
         <onap.nexus.url>https://nexus.onap.org</onap.nexus.url>
-        <sitePath>/content/sites/site/org/openecomp/vvp/${project.artifactId}/${project.version}</sitePath>
+        <sitePath>/content/sites/site/org/onap/vvp/${project.artifactId}/${project.version}</sitePath>
         <!--maven-->
         <timestamp>${maven.build.timestamp}</timestamp>
         <maven.build.timestamp.format>yyyyMMdd'T'HHmmss'Z'</maven.build.timestamp.format>
@@ -52,7 +52,7 @@
                 <pushRegistry>${docker.push.registry}</pushRegistry>
                 <images>
                     <image>
-                        <name>openecomp/vvp/cms</name>
+                        <name>onap/vvp/cms</name>
                         <alias>vvp-cms</alias>
                         <build>
                             <cleanup>true</cleanup>
@@ -92,7 +92,7 @@
                         <goal>push</goal>
                     </goals>
                     <configuration>
-                        <image>openecomp/vvp/cms</image>
+                        <image>onap/vvp/cms</image>
                     </configuration>
                 </execution>
             </executions>
