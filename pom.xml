@@ -21,7 +21,7 @@
         <timestamp>${maven.build.timestamp}</timestamp>
         <maven.build.timestamp.format>yyyyMMdd'T'HHmmss'Z'</maven.build.timestamp.format>
         <!--docker-->
-        <docker.snapshot.tag>${project.version}-SNAPSHOT-${timestamp}</docker.snapshot.tag>
+        <docker.snapshot.tag>${project.version}-${timestamp}</docker.snapshot.tag>
         <docker.staging.tag>${project.version}-STAGING-${timestamp}</docker.staging.tag>
         <docker.latest.tag>${project.version}-latest</docker.latest.tag>
         <docker.pull.registry>nexus3.onap.org:10001</docker.pull.registry>
