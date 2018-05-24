@@ -56,7 +56,7 @@ RUN ln -s -f /opt/configmaps/settings/__init__.py /srv/cms/settings/__init__.py;
     ln -s -f /opt/configmaps/settings/storage.py /srv/cms/settings/storage.py
 
 RUN pip install --upgrade setuptools && \
-    pip install uwsgi && \
+    pip install gunicorn && \
     pip install -r /srv/requirements.txt
 
 #Git is required only for pulling the mezzanine api from forked project 
