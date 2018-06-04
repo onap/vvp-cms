@@ -78,6 +78,7 @@
                             <cleanup>true</cleanup>
                             <tags>
                                 <tag>${docker.snapshot.tag}</tag>
+                                <tag>${docker.latest.tag}</tag>
                             </tags>
                             <dockerFileDir>${project.basedir}</dockerFileDir>
                         </build>
