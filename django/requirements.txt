@@ -39,6 +39,6 @@ Django==1.10.6
 djangorestframework==3.6.4
 Mezzanine==4.2.3
 git+https://github.com/att-innovate/mezzanine-api.git@master
-psycopg2
-boto
-django-storages
+psycopg2==2.7.5
+boto==2.49.0
+django-storages==1.7.1
